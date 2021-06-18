@@ -1,51 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int main(){
-    int t,n,other,first,sub;
-    string str;
-    char c;
+bool findAns(){
+    string s;
+    int cnt=0;
+    vector<int> d(3);
 
-    cin>>t;
-    while(t--){
-        cin>>str;
-        if(str[0]==str[str.size()-1]){
-            cout<<"NO"<<endl;
-            continue;
+    cin>>s;
+    int x=s[0]-'A';
+    int y=s.back()-'A';
+    if(x==y){
+        return false;
+    }
+    d[x]=1;
+    d[y]=-1;
+
+    if(count(s.begin(),s.end(),'A'+x)==s.size()/2){
+        d[3^x^y]=-1;
+    }
+    else{
+         d[3^x^y]=1;
+    }
+
+    for(char ch: s){
+        cnt+=d[ch-'A'];
+        if(cnt<0){
+            return false;
         }
-        char c=str[0];
-        other=0;
-        first=0;
-        sub=0;
-        bool flag=1;
+    }
+    if(cnt!=0){
+        return false;
+    }
+    return true;
+}
 
-        for(int i=0;i<str.size();i++){
-            if(str[i]==c){
-                first++;
-                sub++;
-            }
-            else{
-                other++;
-                sub--;
-            }
 
-            if(sub<0){
-                cout<<"NO"<<endl;
-                flag=0;
-                break;
-            }
+int main()
+{
+    int n;
 
-        }
-
-        //cout<<"other" <<other<<endl;
-        if(other!=str.size()/2 && flag){
-            cout<<"NO"<<endl;
-
-        }
-        else if(flag){
-            cout<<"YES"<<endl;
-        }
-
+    cin>>n;
+    while(n--){
+        cout<<(findAns()? "YES\n" : "NO\n");
     }
     return 0;
 }
