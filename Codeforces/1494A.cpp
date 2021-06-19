@@ -9,6 +9,7 @@ bool findAns(){
     cin>>s;
     int x=s[0]-'A';
     int y=s.back()-'A';
+
     if(x==y){
         return false;
     }
